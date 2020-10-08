@@ -26,10 +26,10 @@ const firebaseConfig = {
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
-console.ignoredYellowBox = ['Setting a timer'];
 //Screens
 import LandingScreen from "./components/auth/landing";
 import RegisterScreen from "./components/auth/register";
+import LoginScreen from "./components/auth/login";
 import MainScreen from "./components/main";
 
 const Stack = createStackNavigator();
@@ -69,22 +69,29 @@ export class App extends Component {
       return (
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Landing">
-            <Stack.Screen
-              name="Landing"
-              component={LandingScreen}
-              options={{ headerShown: false }}
-            />
+            <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       );
     }
     return (
       <Provider store={store}>
-        <MainScreen />
+        <NavigationContainer >
+          <Stack.Navigator initialRouteName="Main">
+            <Stack.Screen name="Main" component={MainScreen}  options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </Provider>
     );
   }
 }
 
 export default App;
+
+//----- YELLOW LOGS WARNS ------
+//Navigate to your node_modules/react-native/Libraries/Core/Timers/JSTimers.js file.
+//Look for the variable MAX_TIMER_DURATION_MS
+//Change its value to 10000 * 1000
+// the changes (with auto format turned off) and re-build your app.
