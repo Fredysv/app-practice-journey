@@ -7,11 +7,11 @@ import { connect } from "react-redux";
 // create a component
 class Edit extends Component {
   state = {
-    objetivos: this.props.navigation.state.params.objetivos,
-    notas: this.props.navigation.state.params.notas,
-    logros: this.props.navigation.state.params.logros,
-    mejoras: this.props.navigation.state.params.mejoras,
-    key: this.props.navigation.state.params.key,
+    objetivos: this.props.route.params.objetivos,
+    notas: this.props.route.params.notas,
+    logros: this.props.route.params.logros,
+    mejoras: this.props.route.params.mejoras,
+    key: this.props.route.params.key,
   };
 
   submit = () => {
@@ -31,13 +31,13 @@ class Edit extends Component {
       key: "",
     });
 
-    this.props.navigation.navigate("Sesions");
+    this.props.navigation.navigate("showDocuments");
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Post</Text>
+        <Text>Sesion</Text>
         <TextInput
           style={{
             marginTop: 20,
@@ -45,9 +45,9 @@ class Edit extends Component {
             borderColor: "gray",
             borderWidth: 1,
           }}
-          placeholder="title"
-          onChangeText={(title) => this.setState({ title })}
-          value={this.state.title}
+          placeholder="Objetivos"
+          onChangeText={(objetivos) => this.setState({ objetivos })}
+          value={this.state.objetivos}
         />
         <TextInput
           style={{
@@ -56,9 +56,9 @@ class Edit extends Component {
             borderColor: "gray",
             borderWidth: 1,
           }}
-          placeholder="content"
-          onChangeText={(content) => this.setState({ content })}
-          value={this.state.content}
+          placeholder="notas"
+          onChangeText={(notas) => this.setState({ notas })}
+          value={this.state.notas}
         />
         <Button title="Submit" onPress={this.submit} />
       </View>

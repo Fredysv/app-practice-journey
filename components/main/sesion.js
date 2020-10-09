@@ -34,6 +34,7 @@ class Post extends Component {
       logros: "",
       mejoras: "",
     });
+    this.props.navigation.navigate("Document");
   };
 
   render() {
@@ -145,6 +146,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 30,
     marginTop: 15,
+  },
+  input: {
+    backgroundColor: "#fff2e1",
+    marginTop: 20,
+    borderRadius: 15,
+    height: 90,
+    borderWidth: 1,
   },
 });
 

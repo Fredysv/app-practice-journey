@@ -11,9 +11,22 @@ import SesionScreen from "./main/sesion";
 import DocumentScreen from "./main/document";
 import ChatScreen from "./main/chat";
 import ProfileScreen from "./main/profile";
+import EditScreen from "./main/edit";
 const Tab = createMaterialBottomTabNavigator();
 //Material
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import { createStackNavigator } from "@react-navigation/stack";
+const DocumentScreenRoute = () => {
+  const Stack = createStackNavigator();
+
+  return (
+    <Stack.Navigator initialRouteName="showDocument">
+      <Stack.Screen name="showDocuments" component={DocumentScreen} />
+      <Stack.Screen name="showEdit" component={EditScreen} />
+    </Stack.Navigator>
+  );
+};
 
 export class main extends Component {
   componentDidMount() {
@@ -44,7 +57,7 @@ export class main extends Component {
         />
         <Tab.Screen
           name="Document"
-          component={DocumentScreen}
+          component={DocumentScreenRoute}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons

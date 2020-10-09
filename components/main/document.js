@@ -17,7 +17,6 @@ class Sesion extends Component {
   componentDidMount() {
     this.props.getSesion();
   }
-
   render() {
     return (
       <View style={styles.container}>
@@ -63,7 +62,7 @@ class Sesion extends Component {
                   >
                     <TouchableHighlight
                       onPress={() =>
-                        this.props.navigation.navigate("Edit", { ...item })
+                        this.props.navigation.navigate("showEdit", { ...item })
                       }
                     >
                       <View style={{ marginRight: 15 }}>
