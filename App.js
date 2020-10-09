@@ -2,15 +2,18 @@ import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
 
 import { Text, View } from "react-native";
+
 // React Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+
 //Redux
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./redux/reducers";
 import thunk from "redux-thunk";
 const store = createStore(rootReducer, applyMiddleware(thunk));
+
 //Firebase config
 import * as firebase from "firebase";
 const firebaseConfig = {
@@ -31,7 +34,6 @@ import LandingScreen from "./components/auth/landing";
 import RegisterScreen from "./components/auth/register";
 import LoginScreen from "./components/auth/login";
 import MainScreen from "./components/main";
-
 const Stack = createStackNavigator();
 
 export class App extends Component {
@@ -41,6 +43,7 @@ export class App extends Component {
       loaded: false,
     };
   }
+  //Verifica si hay un usuario logeado o no
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
@@ -56,6 +59,7 @@ export class App extends Component {
       }
     });
   }
+  //
   render() {
     const { loggedIn, loaded } = this.state;
     if (!loaded) {
@@ -69,7 +73,11 @@ export class App extends Component {
       return (
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Landing">
-            <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="Landing"
+              component={LandingScreen}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
           </Stack.Navigator>
@@ -78,9 +86,13 @@ export class App extends Component {
     }
     return (
       <Provider store={store}>
-        <NavigationContainer >
+        <NavigationContainer>
           <Stack.Navigator initialRouteName="Main">
-            <Stack.Screen name="Main" component={MainScreen}  options={{ headerShown: false }} />
+            <Stack.Screen
+              name="Main"
+              component={MainScreen}
+              options={{ headerShown: true, title: "Practice Journey" }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

@@ -1,10 +1,10 @@
-import React from 'react'
-import { View,Text } from "react-native";
+import React from "react";
+import { View, Text } from "react-native";
 
 export default function chat() {
-    return (
-        <View>
-            <Text>Chat in progress</Text>
-        </View>
-    )
+  return (
+    <View>
+      <Text>Chat in progress</Text>
+    </View>
+  );
 }

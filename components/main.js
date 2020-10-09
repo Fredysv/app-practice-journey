@@ -6,14 +6,14 @@ import { bindActionCreators } from "redux";
 import { fetchUser } from "../redux/actions/index";
 
 //Bottom-tabs
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import SesionScreen from './main/sesion'
-import DocumentScreen from './main/document'
-import ChatScreen from './main/chat'
-import ProfileScreen from './main/profile'
-const Tab = createBottomTabNavigator();
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import SesionScreen from "./main/sesion";
+import DocumentScreen from "./main/document";
+import ChatScreen from "./main/chat";
+import ProfileScreen from "./main/profile";
+const Tab = createMaterialBottomTabNavigator();
 //Material
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export class main extends Component {
   componentDidMount() {
@@ -21,34 +21,57 @@ export class main extends Component {
   }
   render() {
     return (
-      <Tab.Navigator>
-        <Tab.Screen name="Sesion" component={SesionScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name='calendar-month' color={color} size={26}/>
-          )
+      <Tab.Navigator
+        labeled={false}
+        activeColor="#d9a458"
+        barStyle={{
+          backgroundColor: "#fff2e1",
         }}
+      >
+        <Tab.Screen
+          name="Sesion"
+          component={SesionScreen}
+          options={{
+            headerShown: true,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="calendar-month"
+                color={color}
+                size={26}
+              />
+            ),
+          }}
         />
-        <Tab.Screen name="Document" component={DocumentScreen}
+        <Tab.Screen
+          name="Document"
+          component={DocumentScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name='calendar-month' color={color} size={26}/>
-          )
-        }}
+              <MaterialCommunityIcons
+                name="file-document"
+                color={color}
+                size={26}
+              />
+            ),
+          }}
         />
-        <Tab.Screen name="Chat" component={ChatScreen}
+        <Tab.Screen
+          name="Chat"
+          component={ChatScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name='calendar-month' color={color} size={26}/>
-          )
-        }}
+              <MaterialCommunityIcons name="chat" color={color} size={26} />
+            ),
+          }}
         />
-        <Tab.Screen name="Profile" component={ProfileScreen}
+        <Tab.Screen
+          name="Profile"
+          component={ProfileScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name='calendar-month' color={color} size={26}/>
-          )
-        }}
+              <MaterialCommunityIcons name="account" color={color} size={26} />
+            ),
+          }}
         />
       </Tab.Navigator>
     );
