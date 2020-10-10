@@ -7,17 +7,36 @@ import {
   Button,
   FlatList,
   TouchableHighlight,
+  Alert,
 } from "react-native";
 import { getSesion, deleteSesion } from "../../redux/actions/index";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import _ from "lodash";
+import * as MailComposer from "expo-mail-composer";
 
 class Sesion extends Component {
   componentDidMount() {
     this.props.getSesion();
   }
   render() {
+    const sendEmail = (sesioninfo) => {
+      console.log(sesioninfo);
+      //var line = "<br>";
+      MailComposer.composeAsync({
+        recipients: [],
+        subject: "Sesion",
+        body:
+          "\n\n Objetivos:\n" +
+          sesioninfo[0] +
+          "\n\n Notas:\n" +
+          sesioninfo[1] +
+          "\n\n Logros:\n" +
+          sesioninfo[2] +
+          "\n\n Mejoras:\n" +
+          sesioninfo[3],
+      });
+    };
     return (
       <View style={styles.container}>
         {this.props.loadingReducer ? (
@@ -60,6 +79,35 @@ class Sesion extends Component {
                       marginTop: 25,
                     }}
                   >
+                    <TouchableHighlight
+                      onPress={() =>
+                        Alert.alert(
+                          "Enviar correo",
+                          "Seguro que quieres enviar esta sesion?",
+                          [
+                            {
+                              text: "Cancel",
+                              style: "cancel",
+                            },
+                            {
+                              text: "OK",
+                              onPress: () =>
+                                sendEmail([
+                                  item.objetivos,
+                                  item.notas,
+                                  item.logros,
+                                  item.mejoras,
+                                ]),
+                            },
+                          ],
+                          { cancelable: false }
+                        )
+                      }
+                    >
+                      <View style={{ marginRight: 15 }}>
+                        <Icon size={30} color="white" name="send" />
+                      </View>
+                    </TouchableHighlight>
                     <TouchableHighlight
                       onPress={() =>
                         this.props.navigation.navigate("showEdit", { ...item })

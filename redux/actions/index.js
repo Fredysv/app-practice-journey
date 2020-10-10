@@ -43,12 +43,12 @@ export function getSesion() {
   };
 }
 
-export function postSesion(objetivos, notas, logros, mejoras) {
+export function postSesion(objetivos, notas, logros, mejoras, fecha) {
   return (dispatch) => {
     firebase
       .database()
       .ref("/sesion")
-      .push({ objetivos, notas, logros, mejoras });
+      .push({ objetivos, notas, logros, mejoras, fecha });
   };
 }
 
@@ -58,12 +58,12 @@ export function deleteSesion(key) {
   };
 }
 
-export function editSesion(objetivos, notas, logros, mejoras, key) {
+export function editSesion(objetivos, notas, logros, mejoras, fecha, key) {
   return (dispatch) => {
     firebase
       .database()
       .ref(`/sesion`)
       .child(key)
-      .update({ objetivos, notas, logros, mejoras });
+      .update({ objetivos, notas, logros, mejoras, fecha });
   };
 }

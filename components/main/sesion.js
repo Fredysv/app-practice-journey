@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { postSesion } from "../../redux/actions/index";
 import { connect } from "react-redux";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 // create a component
 class Post extends Component {
@@ -19,6 +20,9 @@ class Post extends Component {
     notas: "",
     logros: "",
     mejoras: "",
+    fecha: "",
+    visibility: false,
+    DateDisplay: "",
   };
 
   submit = () => {
@@ -26,15 +30,28 @@ class Post extends Component {
       this.state.objetivos,
       this.state.notas,
       this.state.logros,
-      this.state.mejoras
+      this.state.mejoras,
+      this.state.fecha
     );
     this.setState({
       objetivos: "",
       notas: "",
       logros: "",
       mejoras: "",
+      fecha: new Date().toUTCString,
     });
     this.props.navigation.navigate("Document");
+  };
+  handleConfirm = (date) => {
+    this.setState({ DateDisplay: date.toUTCString() });
+    this.setState({ fecha: date.toUTCString() });
+    console.log(date);
+  };
+  onPressCancel = () => {
+    this.setState({ visibility: false });
+  };
+  onPressButton = () => {
+    this.setState({ visibility: true });
   };
 
   render() {
@@ -42,15 +59,7 @@ class Post extends Component {
       <SafeAreaView style={styles.container}>
         <ScrollView>
           <Text style={styles.title1}>Objetivos</Text>
-          <View
-            style={{
-              backgroundColor: "#fff2e1",
-              marginTop: 20,
-              borderRadius: 15,
-              height: 90,
-              borderWidth: 1,
-            }}
-          >
+          <View style={styles.input}>
             <TextInput
               multiline={true}
               placeholder="objetivos"
@@ -59,15 +68,7 @@ class Post extends Component {
             />
           </View>
           <Text style={styles.title1}>Notas</Text>
-          <View
-            style={{
-              backgroundColor: "#fff2e1",
-              marginTop: 20,
-              borderRadius: 15,
-              height: 90,
-              borderWidth: 1,
-            }}
-          >
+          <View style={styles.input}>
             <TextInput
               multiline={true}
               placeholder="Notas"
@@ -76,15 +77,7 @@ class Post extends Component {
             />
           </View>
           <Text style={styles.title1}>Logros</Text>
-          <View
-            style={{
-              backgroundColor: "#fff2e1",
-              marginTop: 20,
-              borderRadius: 15,
-              height: 90,
-              borderWidth: 1,
-            }}
-          >
+          <View style={styles.input}>
             <TextInput
               multiline={true}
               placeholder="Logros"
@@ -93,16 +86,7 @@ class Post extends Component {
             />
           </View>
           <Text style={styles.title1}>Mejoras</Text>
-          <View
-            style={{
-              backgroundColor: "#fff2e1",
-              marginTop: 20,
-              marginBottom: 20,
-              borderRadius: 15,
-              height: 90,
-              borderWidth: 1,
-            }}
-          >
+          <View style={styles.input}>
             <TextInput
               multiline={true}
               placeholder="Mejoras"
@@ -111,20 +95,30 @@ class Post extends Component {
             />
           </View>
           <TouchableOpacity
-            style={{
-              backgroundColor: "#a31b00",
-              height: 40,
-              width: 200,
-              padding: 10,
-              paddingBottom: 20,
-              alignSelf: "center",
-              borderRadius: 10,
-            }}
+            onPress={this.onPressButton}
+            style={[styles.touchable, { height: 65 }]}
+          >
+            <Text style={{ fontSize: 20, color: "white", textAlign: "center" }}>
+              Selecciona la fecha de la sesión
+            </Text>
+            <Text style={{ fontSize: 20, color: "white", textAlign: "center" }}>
+              {this.state.DateDisplay}
+            </Text>
+          </TouchableOpacity>
+          <DateTimePickerModal
+            title="date"
+            isVisible={this.state.visibility}
+            onConfirm={this.handleConfirm}
+            onCancel={this.onPressCancel}
+            onChange={(fecha) => this.setState({ fecha })}
+          />
+          <TouchableOpacity
+            style={styles.touchable}
             title="Submit"
             onPress={this.submit}
           >
             <Text style={{ fontSize: 20, color: "white", textAlign: "center" }}>
-              New Sesion
+              Nueva Sesion
             </Text>
           </TouchableOpacity>
         </ScrollView>
@@ -153,6 +147,17 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 90,
     borderWidth: 1,
+    borderWidth: 0,
+    padding: 5,
+  },
+  touchable: {
+    backgroundColor: "#a31b00",
+    height: 40,
+    width: 200,
+    padding: 10,
+    alignSelf: "center",
+    borderRadius: 10,
+    margin: 20,
   },
 });
 
